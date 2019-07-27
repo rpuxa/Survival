@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main_nav"
+    app:startDestination="@id/profileFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="ru.rpuxa.survival.view.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+    </fragment>
+    <fragment
+        android:id="@+id/stuffFragment"
+        android:name="ru.rpuxa.survival.view.fragments.StuffFragment"
+        android:label="fragment_stuff"
+        tools:layout="@layout/fragment_stuff" />
+    <fragment
+        android:id="@+id/locationsFragment"
+        android:name="ru.rpuxa.survival.view.fragments.LocationsFragment"
+        android:label="fragment_locations"
+        tools:layout="@layout/fragment_locations" />
+</navigation>

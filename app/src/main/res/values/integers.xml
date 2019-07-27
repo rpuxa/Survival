@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="event_interval_millis">4000</integer>
+    <integer name="location_lake_duration">60000</integer>
+    <integer name="activity_menu_slide_duration">500</integer>
+</resources>
