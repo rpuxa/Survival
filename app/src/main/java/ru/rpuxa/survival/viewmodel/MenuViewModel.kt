@@ -8,6 +8,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import ru.rpuxa.survival.model.database.PlayerEntity
 import ru.rpuxa.survival.model.database.PlayersDao
 import ru.rpuxa.survival.model.database.SettingsDao
 import ru.rpuxa.survival.model.database.SettingsEntity
@@ -19,11 +20,14 @@ class MenuViewModel : ViewModel() {
 
     private val model = Model()
 
-    private val _settings: MutableLiveData<SettingsEntity>
+    private lateinit var _settings: MutableLiveData<SettingsEntity>
+
     val settings: LiveData<SettingsEntity> get() = _settings
+    lateinit var players: LiveData<List<PlayerEntity>>
+        private set
 
     init {
-        _settings = runBlocking {
+        runBlocking {
             val dbSettings = model.settingsDao.get()
             val settings = if (dbSettings != null) {
                 dbSettings
@@ -32,7 +36,8 @@ class MenuViewModel : ViewModel() {
                 model.settingsDao.update(newSettings)
                 newSettings
             }
-            MutableLiveData(settings)
+            _settings = MutableLiveData(settings)
+            players = model.playersDao.getAllEntities()
         }
     }
 

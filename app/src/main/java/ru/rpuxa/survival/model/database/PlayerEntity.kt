@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 class PlayerEntity(
     @PrimaryKey
     val id: Long,
+    val slot: Int,
     val name: String,
     val scrap: Long,
     val ammo: Long

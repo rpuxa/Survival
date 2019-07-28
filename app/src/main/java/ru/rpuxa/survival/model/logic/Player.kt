@@ -7,6 +7,7 @@ import ru.rpuxa.survival.nnValue
 
 class Player(
     val id: Long,
+    val slot: Int,
     val name: String,
     resources: Resources
 ) {
@@ -26,6 +27,10 @@ class Player(
                 scrap < res.scrap -> Needed.SCRAP
                 else -> Needed.NOTHING
             }
+        }
+
+        fun add(resources: Resources) {
+            
         }
 
         enum class Needed {

@@ -11,7 +11,6 @@ import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_main_menu.*
-import org.jetbrains.anko.support.v4.act
 import ru.rpuxa.survival.R
 import ru.rpuxa.survival.model.database.SettingsEntity
 import ru.rpuxa.survival.nnValue
@@ -22,7 +21,7 @@ class MainMenuFragment : Fragment() {
     private val viewModel by viewModels<MenuViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-        inflater.inflate(R.layout.fragment_main_menu, container)
+        inflater.inflate(R.layout.fragment_main_menu, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val navController = findNavController()

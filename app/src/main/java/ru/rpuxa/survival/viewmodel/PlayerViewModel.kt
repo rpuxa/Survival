@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.runBlocking
 import ru.rpuxa.survival.model.database.PlayersDao
+import ru.rpuxa.survival.model.database.toPlayer
 import ru.rpuxa.survival.model.logic.Player
 
 class PlayerViewModel(private val playerId: Long) : ViewModel() {
@@ -19,7 +20,7 @@ class PlayerViewModel(private val playerId: Long) : ViewModel() {
     init {
         player = runBlocking {
             model.playersDao.getById(playerId) ?: error("Wrong id")
-        }
+        }.toPlayer()
     }
 
     class Model {

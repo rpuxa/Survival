@@ -17,4 +17,5 @@
     <string name="saves">Saves</string>
     <string name="back">Back</string>
     <string name="delete">Delete</string>
+    <string name="empty_save">Empty save</string>
 </resources>

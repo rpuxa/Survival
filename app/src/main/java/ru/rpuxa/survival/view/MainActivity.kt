@@ -13,7 +13,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.rpuxa.survival.R
 import ru.rpuxa.survival.viewmodel.PlayerViewModel
-import ru.rpuxa.survival.viewmodel.PlayerViewModel_MembersInjector
 import ru.rpuxa.survival.viewmodel.factories.PlayerViewModelFactory
 
 class MainActivity : AppCompatActivity() {
