@@ -14,9 +14,10 @@ class SavesAdapter : RecyclerView.Adapter<SavesAdapter.SavesViewHolder>() {
 
     private var list: List<PlayerEntity?> = emptyList()
 
-    class SavesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class SavesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.save_name
         val checkBox: CheckBox = view.save_check_box
+        val scrap: TextView = view.save_scrap
 
         fun bind(item: PlayerEntity?) {
 
