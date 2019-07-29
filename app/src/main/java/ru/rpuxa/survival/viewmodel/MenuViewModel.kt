@@ -1,18 +1,14 @@
 package ru.rpuxa.survival.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import ru.rpuxa.survival.model.database.PlayerEntity
 import ru.rpuxa.survival.model.database.PlayersDao
 import ru.rpuxa.survival.model.database.SettingsDao
 import ru.rpuxa.survival.model.database.SettingsEntity
-import ru.rpuxa.survival.nnValue
+import ru.rpuxa.survival.model.logic.Player
 import ru.rpuxa.survival.view.App
 import javax.inject.Inject
 
@@ -20,42 +16,51 @@ class MenuViewModel : ViewModel() {
 
     private val model = Model()
 
-    private lateinit var _settings: MutableLiveData<SettingsEntity>
-
-    val settings: LiveData<SettingsEntity> get() = _settings
+    lateinit var settings: LiveData<SettingsEntity>
+        private set
     lateinit var players: LiveData<List<PlayerEntity>>
         private set
 
     init {
-        runBlocking {
-            val dbSettings = model.settingsDao.get()
-            val settings = if (dbSettings != null) {
-                dbSettings
-            } else {
-                val newSettings = SettingsEntity(SettingsEntity.LAST_SAVE_UNDEFINED)
+        settings = model.settingsDao.get()
+        if (settings.value == null) {
+            val newSettings = SettingsEntity(SettingsEntity.LAST_SAVE_UNDEFINED)
+            viewModelScope.launch {
                 model.settingsDao.update(newSettings)
-                newSettings
             }
-            _settings = MutableLiveData(settings)
-            players = model.playersDao.getAllEntities()
         }
+        players = model.playersDao.getLiveDataForAll()
     }
 
 
     fun setLastSaveId(id: Long) {
-        settings.nnValue.lastSaveId = id
-        updateInDataBase()
+        settings.value!!.lastSaveId = id
+        updateSettings()
     }
 
-    private fun updateInDataBase() {
+    fun newPlayer(name: String, slot: Int): Long {
+        val player = Player.create(name, slot)
         viewModelScope.launch {
-            model.settingsDao.update(settings.nnValue)
+            model.playersDao.insert(player)
+        }
+
+        return player.id
+    }
+
+    private fun updateSettings() {
+        viewModelScope.launch {
+            model.settingsDao.update(settings.value!!)
         }
     }
 
-    @ExperimentalCoroutinesApi
-    override fun onCleared() {
-        viewModelScope.cancel()
+    fun deleteSave(id: Long) {
+        viewModelScope.launch {
+            model.playersDao.delete(id)
+            val settings = settings.value!!
+            if (settings.lastSaveId == id) {
+                setLastSaveId(model.playersDao.getAll().firstOrNull()?.id ?: SettingsEntity.LAST_SAVE_UNDEFINED)
+            }
+        }
     }
 
     class Model {

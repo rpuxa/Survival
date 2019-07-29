@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_save.view.*
 import ru.rpuxa.survival.R
 import ru.rpuxa.survival.model.database.PlayerEntity
-import ru.rpuxa.survival.nnValue
 
-class SavesAdapter : RecyclerView.Adapter<SavesAdapter.SavesViewHolder>() {
+class SavesAdapter(slots: Int) : RecyclerView.Adapter<SavesAdapter.SavesViewHolder>() {
 
-    private var list: List<PlayerEntity?> = emptyList()
+    private var list: List<PlayerEntity?> = List(slots) { null }
     private val _checked = MutableLiveData<PlayerEntity?>(null)
     private var onNewPlayer: ((Int) -> Unit)? = null
+    private var loading = true
 
     val checked: LiveData<PlayerEntity?> get() = _checked
 
@@ -28,7 +28,7 @@ class SavesAdapter : RecyclerView.Adapter<SavesAdapter.SavesViewHolder>() {
         private val scrap: TextView = viewSwitcher.save_scrap
         private val ammo: TextView = viewSwitcher.save_ammo
         private val rockets: TextView = viewSwitcher.save_rockets
-        private val emptySave: View = viewSwitcher.empty_save
+        private val emptySave: TextView = viewSwitcher.empty_save
         private val content: View = viewSwitcher.save_content
 
         fun bind(item: PlayerEntity?, slot: Int) {
@@ -36,21 +36,26 @@ class SavesAdapter : RecyclerView.Adapter<SavesAdapter.SavesViewHolder>() {
                 viewSwitcher.showNext()
             }
             if (item == null) {
-                emptySave.setOnClickListener {
-                    onNewPlayer?.invoke(slot)
+                emptySave.setText(if (loading) R.string.loading else R.string.empty_save)
+                if (!loading) {
+                    emptySave.setOnClickListener {
+                        onNewPlayer?.invoke(slot)
+                    }
                 }
                 return
             }
 
-            checkBox.isChecked = item == checked.value
+            checked.observeForever {
+                checkBox.isChecked = item == it
+            }
+
             name.text = item.name
             scrap.text = item.scrap.toString()
             ammo.text = item.ammo.toString()
             rockets.text = 0.toString()
-            checkBox.isChecked = false
 
             content.setOnClickListener {
-                _checked.value = if (checked.nnValue == item) null else item
+                _checked.value = if (checked.value == item) null else item
                 notifyDataSetChanged()
             }
         }
@@ -74,6 +79,11 @@ class SavesAdapter : RecyclerView.Adapter<SavesAdapter.SavesViewHolder>() {
 
     fun update(list: List<PlayerEntity?>) {
         this.list = list
+        loading = false
+        val slot = checked.value?.slot
+        if (!list.any { it?.slot == slot }) {
+            _checked.value = null
+        }
         notifyDataSetChanged()
     }
 }

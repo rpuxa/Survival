@@ -4,27 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_main_menu.*
 import ru.rpuxa.survival.R
+import ru.rpuxa.survival.lazyNavController
 import ru.rpuxa.survival.model.database.SettingsEntity
-import ru.rpuxa.survival.nnValue
 import ru.rpuxa.survival.viewmodel.MenuViewModel
 
 class MainMenuFragment : Fragment() {
 
     private val viewModel by viewModels<MenuViewModel>()
+    private val navController by lazyNavController
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_main_menu, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val navController = findNavController()
 
         viewModel.settings.observe(this) {
             start_game.text = if (it.lastSaveId == SettingsEntity.LAST_SAVE_UNDEFINED) {
@@ -35,15 +32,18 @@ class MainMenuFragment : Fragment() {
         }
 
         start_game.setOnClickListener {
-            val lastSaveId = viewModel.settings.nnValue.lastSaveId
+            val lastSaveId = viewModel.settings.value!!.lastSaveId
             if (lastSaveId == SettingsEntity.LAST_SAVE_UNDEFINED) {
-                navController.navigate(R.id.savesFragment)
+                navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToSavesFragment(true))
             } else {
                 navController.navigate(
                     MainMenuFragmentDirections.actionMainMenuFragmentToMainActivity(lastSaveId)
                 )
             }
+        }
 
+        saves.setOnClickListener {
+            navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToSavesFragment(false))
         }
     }
 }

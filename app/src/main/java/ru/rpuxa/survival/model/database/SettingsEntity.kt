@@ -5,12 +5,23 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "settings")
 class SettingsEntity(
-    var lastSaveId: Long
+    private var _lastSaveId: Long
 ) {
+
+    var lastSaveId: Long
+        get() {
+            println("GET   ${hashCode()}   $_lastSaveId")
+            return _lastSaveId
+        }
+        set(value) {
+            println("SET    ${hashCode()}    $value")
+            _lastSaveId = value
+        }
+
 
     @PrimaryKey
     @JvmField
-    @Deprecated("Only for database usage")
+    @Deprecated("Only for database usage", level = DeprecationLevel.ERROR)
     var id: Byte = 0
 
     companion object {

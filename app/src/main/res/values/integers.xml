@@ -3,4 +3,5 @@
     <integer name="event_interval_millis">4000</integer>
     <integer name="location_lake_duration">60000</integer>
     <integer name="activity_menu_slide_duration">500</integer>
+    <integer name="save_slots_amount">3</integer>
 </resources>

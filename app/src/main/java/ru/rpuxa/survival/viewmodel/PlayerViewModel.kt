@@ -1,15 +1,12 @@
 package ru.rpuxa.survival.viewmodel
 
 import androidx.lifecycle.ViewModel
-import ru.rpuxa.survival.model.database.DataBase
-import ru.rpuxa.survival.view.App
-import javax.inject.Inject
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.runBlocking
 import ru.rpuxa.survival.model.database.PlayersDao
 import ru.rpuxa.survival.model.database.toPlayer
 import ru.rpuxa.survival.model.logic.Player
+import ru.rpuxa.survival.view.App
+import javax.inject.Inject
 
 class PlayerViewModel(private val playerId: Long) : ViewModel() {
 

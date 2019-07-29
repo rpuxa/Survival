@@ -1,7 +1,10 @@
 package ru.rpuxa.survival.model.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
 @Dao
 interface SettingsDao {
@@ -10,5 +13,5 @@ interface SettingsDao {
     suspend fun update(settings: SettingsEntity)
 
     @Query("SELECT * FROM settings")
-    suspend fun get(): SettingsEntity?
+    fun get(): LiveData<SettingsEntity>
 }

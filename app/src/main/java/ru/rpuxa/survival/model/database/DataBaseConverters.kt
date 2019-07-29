@@ -2,9 +2,15 @@ package ru.rpuxa.survival.model.database
 
 import androidx.room.TypeConverter
 import ru.rpuxa.survival.model.logic.Player
-import ru.rpuxa.survival.nnValue
 
-@TypeConverter
+class DataBaseConverters {
+    @TypeConverter
+    fun PlayerEntity.playerEntityToPlayer() = toPlayer()
+
+    @TypeConverter
+    fun Player.playerToPlayerEntity() = toPlayerEntity()
+}
+
 fun PlayerEntity.toPlayer(): Player {
     val resources = Player.Resources(
         ammo = ammo,
@@ -19,9 +25,8 @@ fun PlayerEntity.toPlayer(): Player {
     )
 }
 
-@TypeConverter
 fun Player.toPlayerEntity(): PlayerEntity {
-    val resources = resources.nnValue
+    val resources = resources.value!!
     return PlayerEntity(
         id,
         slot,
@@ -30,3 +35,4 @@ fun Player.toPlayerEntity(): PlayerEntity {
         resources.scrap
     )
 }
+

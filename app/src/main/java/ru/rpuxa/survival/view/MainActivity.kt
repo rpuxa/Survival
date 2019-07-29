@@ -1,15 +1,11 @@
 package ru.rpuxa.survival.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.navArgs
-import androidx.navigation.navOptions
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.rpuxa.survival.R
 import ru.rpuxa.survival.viewmodel.PlayerViewModel
@@ -44,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             .setTitle(R.string.back_dialog_title)
             .setCancelable(true)
             .setPositiveButton(R.string.dialog_yes) { _, _ ->
-                navController.popBackStack()
+                navController.navigate(R.id.menuActivity)
             }
             .setNegativeButton(R.string.dialog_no) { dialog, _ ->
                 dialog.dismiss()

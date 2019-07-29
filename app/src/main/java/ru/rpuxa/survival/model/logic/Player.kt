@@ -2,8 +2,7 @@ package ru.rpuxa.survival.model.logic
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ru.rpuxa.survival.model.database.PlayerEntity
-import ru.rpuxa.survival.nnValue
+import ru.rpuxa.survival.random
 
 class Player(
     val id: Long,
@@ -41,6 +40,17 @@ class Player(
 
         companion object {
             val FREE = Resources()
+        }
+    }
+
+    companion object {
+        fun create(name: String, slot: Int): Player {
+            return Player(
+                random.nextLong(),
+                slot,
+                name,
+                Resources()
+            )
         }
     }
 }

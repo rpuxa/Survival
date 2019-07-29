@@ -21,4 +21,9 @@
         android:name="ru.rpuxa.survival.view.fragments.LocationsFragment"
         android:label="fragment_locations"
         tools:layout="@layout/fragment_locations" />
+    <activity
+        android:id="@+id/menuActivity"
+        android:name="ru.rpuxa.survival.view.MenuActivity"
+        android:label="fragment_main_menu"
+        tools:layout="@layout/fragment_main_menu" />
 </navigation>
