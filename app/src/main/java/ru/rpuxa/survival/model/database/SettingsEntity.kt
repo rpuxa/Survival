@@ -5,19 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "settings")
 class SettingsEntity(
-    private var _lastSaveId: Long
-) {
-
     var lastSaveId: Long
-        get() {
-            println("GET   ${hashCode()}   $_lastSaveId")
-            return _lastSaveId
-        }
-        set(value) {
-            println("SET    ${hashCode()}    $value")
-            _lastSaveId = value
-        }
-
+) {
 
     @PrimaryKey
     @JvmField
@@ -26,5 +15,9 @@ class SettingsEntity(
 
     companion object {
         const val LAST_SAVE_UNDEFINED = -1L
+
+        fun createNew() = SettingsEntity(
+            LAST_SAVE_UNDEFINED
+        )
     }
 }

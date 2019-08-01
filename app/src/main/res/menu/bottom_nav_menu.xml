@@ -6,7 +6,7 @@
             android:title="@string/title_profile"/>
 
     <item
-            android:id="@+id/navigation_locations"
+            android:id="@+id/locations_nav"
             android:title="@string/title_locations"/>
 
     <item

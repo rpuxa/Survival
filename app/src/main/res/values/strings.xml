@@ -6,7 +6,7 @@
     <string name="title_profile">Profile</string>
     <string name="location_lake_name">West lake</string>
     <string name="location_lake_description">description of the west lake. Free for explore</string>
-    <string name="back_dialog_title">Do you want to go to the main menu?</string>
+    <string name="back_dialog_title">Do you want to return to the main menu?</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_game">New game</string>
     <string name="continue_game">Continue game</string>

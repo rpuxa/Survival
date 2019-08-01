@@ -16,7 +16,7 @@ import org.jetbrains.anko.support.v4.toast
 import ru.rpuxa.survival.R
 import ru.rpuxa.survival.lazyNavController
 import ru.rpuxa.survival.observe
-import ru.rpuxa.survival.view.PickNameDialog
+import ru.rpuxa.survival.view.dialogs.PickNameDialog
 import ru.rpuxa.survival.view.adapters.SavesAdapter
 import ru.rpuxa.survival.viewmodel.MenuViewModel
 
@@ -101,5 +101,10 @@ class SavesFragment : Fragment() {
     private fun startGame(id: Long) {
         viewModel.setLastSaveId(id)
         navController.navigate(SavesFragmentDirections.actionSavesFragmentToMainActivity(id))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.onResume()
     }
 }

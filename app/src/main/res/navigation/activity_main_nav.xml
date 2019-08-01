@@ -3,27 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main_nav"
-    app:startDestination="@id/profileFragment">
+    app:startDestination="@id/navigation_profile">
 
     <fragment
-        android:id="@+id/profileFragment"
+        android:id="@+id/navigation_profile"
         android:name="ru.rpuxa.survival.view.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
     </fragment>
     <fragment
-        android:id="@+id/stuffFragment"
+        android:id="@+id/navigation_stuff"
         android:name="ru.rpuxa.survival.view.fragments.StuffFragment"
         android:label="fragment_stuff"
         tools:layout="@layout/fragment_stuff" />
-    <fragment
-        android:id="@+id/locationsFragment"
-        android:name="ru.rpuxa.survival.view.fragments.LocationsFragment"
-        android:label="fragment_locations"
-        tools:layout="@layout/fragment_locations" />
     <activity
         android:id="@+id/menuActivity"
         android:name="ru.rpuxa.survival.view.MenuActivity"
         android:label="fragment_main_menu"
         tools:layout="@layout/fragment_main_menu" />
+    <include app:graph="@navigation/locations_nav" />
 </navigation>

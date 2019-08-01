@@ -1,26 +1,37 @@
 package ru.rpuxa.survival.view.fragments
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_locations.*
 import ru.rpuxa.survival.R
+import ru.rpuxa.survival.lazyNavController
+import ru.rpuxa.survival.view.adapters.LocationsAdapter
+import ru.rpuxa.survival.viewmodel.PlayerViewModel
 
 class LocationsFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_locations, container, false)
+    private val playerViewModel: PlayerViewModel by viewModels()
+    private val navController by lazyNavController
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (playerViewModel.player.isExploring){
+            navController.navigate(R.id.explorationFragment)
+        }
     }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        inflater.inflate(R.layout.fragment_locations, container, false)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        
+        val adapter = LocationsAdapter()
+        locations_list.adapter = adapter
+        locations_list.layoutManager = LinearLayoutManager(requireContext())
+
     }
 }

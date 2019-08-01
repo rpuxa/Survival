@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/locations_nav"
+    app:startDestination="@id/locationFragment">
+
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="ru.rpuxa.survival.view.fragments.LocationsFragment"
+        android:label="fragment_locations"
+        tools:layout="@layout/fragment_locations">
+        <action
+            android:id="@+id/action_locations_nav_to_locationDetailsDialog"
+            app:destination="@id/locationDetailsDialog" />
+        <action
+            android:id="@+id/action_locationFragment_to_explorationFragment"
+            app:destination="@id/explorationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/locationDetailsDialog"
+        android:name="ru.rpuxa.survival.view.dialogs.LocationDetailsDialog"
+        android:label="LocationDetailsDialog" >
+        <argument
+            android:name="locationId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_locationDetailsDialog_to_explorationFragment"
+            app:destination="@id/explorationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/explorationFragment"
+        android:name="ru.rpuxa.survival.view.fragments.ExplorationFragment"
+        android:label="ExplorationFragment" />
+</navigation>

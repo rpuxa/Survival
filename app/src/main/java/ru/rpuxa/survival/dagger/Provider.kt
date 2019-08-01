@@ -31,7 +31,7 @@ class Provider(private val app: App) {
 
     @Provides
     @Singleton
-    fun allLocations(context: Context) = listOf<Location>(
+    fun allLocations(context: Context): MutableList<Location> = mutableListOf(
         LakeLocation(context)
     )
 }

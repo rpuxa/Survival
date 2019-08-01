@@ -1,4 +1,4 @@
-package ru.rpuxa.survival.view
+package ru.rpuxa.survival.view.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater

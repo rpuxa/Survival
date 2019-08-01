@@ -2,11 +2,12 @@ package ru.rpuxa.survival.view
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.navArgs
+import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.alert
 import ru.rpuxa.survival.R
 import ru.rpuxa.survival.viewmodel.PlayerViewModel
 import ru.rpuxa.survival.viewmodel.factories.PlayerViewModelFactory
@@ -21,31 +22,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-        nav_view.setOnNavigationItemSelectedListener { item ->
-            val current = when (item.itemId) {
-                R.id.navigation_profile -> R.id.profileFragment
-                R.id.navigation_locations -> R.id.stuffFragment
-                R.id.navigation_stuff -> R.id.locationsFragment
-                else -> error("Unknown fragment")
-            }
-            navController.navigate(current)
-            true
-        }
+        nav_view.setupWithNavController(navController)
     }
 
     override fun onBackPressed() {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.back_dialog_title)
-            .setCancelable(true)
-            .setPositiveButton(R.string.dialog_yes) { _, _ ->
+        alert {
+            titleResource = R.string.back_dialog_title
+            isCancelable = true
+            positiveButton(R.string.dialog_yes) {
                 navController.navigate(R.id.menuActivity)
             }
-            .setNegativeButton(R.string.dialog_no) { dialog, _ ->
-                dialog.dismiss()
+            negativeButton(R.string.dialog_no) {
+                it.dismiss()
             }
-            .show()
+        }.show()
     }
 }
 

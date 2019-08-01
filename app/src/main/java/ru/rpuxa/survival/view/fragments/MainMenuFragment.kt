@@ -46,4 +46,9 @@ class MainMenuFragment : Fragment() {
             navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToSavesFragment(false))
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.onResume()
+    }
 }

@@ -1,14 +1,16 @@
 package ru.rpuxa.survival.viewmodel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.rpuxa.survival.model.database.PlayerEntity
+import kotlinx.coroutines.runBlocking
 import ru.rpuxa.survival.model.database.PlayersDao
 import ru.rpuxa.survival.model.database.SettingsDao
 import ru.rpuxa.survival.model.database.SettingsEntity
 import ru.rpuxa.survival.model.logic.Player
+import ru.rpuxa.survival.update
 import ru.rpuxa.survival.view.App
 import javax.inject.Inject
 
@@ -16,20 +18,15 @@ class MenuViewModel : ViewModel() {
 
     private val model = Model()
 
-    lateinit var settings: LiveData<SettingsEntity>
-        private set
-    lateinit var players: LiveData<List<PlayerEntity>>
-        private set
+    private val _settings = MutableLiveData<SettingsEntity>()
 
-    init {
-        settings = model.settingsDao.get()
-        if (settings.value == null) {
-            val newSettings = SettingsEntity(SettingsEntity.LAST_SAVE_UNDEFINED)
-            viewModelScope.launch {
-                model.settingsDao.update(newSettings)
-            }
+    val settings: LiveData<SettingsEntity> get() = _settings
+    val players = model.playersDao.getLiveDataForAll()
+
+    fun onResume() {
+        runBlocking {
+            _settings.value = model.settingsDao.getOrNewIfAbsent()
         }
-        players = model.playersDao.getLiveDataForAll()
     }
 
 
@@ -48,6 +45,7 @@ class MenuViewModel : ViewModel() {
     }
 
     private fun updateSettings() {
+        _settings.update()
         viewModelScope.launch {
             model.settingsDao.update(settings.value!!)
         }

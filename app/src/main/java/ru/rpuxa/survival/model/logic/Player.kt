@@ -14,6 +14,8 @@ class Player(
 
     val resources: LiveData<Resources> get() = _resources
 
+    val isExploring: Boolean get() = false
+
 
     class Resources(
         val ammo: Long = 0L,
@@ -29,7 +31,7 @@ class Player(
         }
 
         fun add(resources: Resources) {
-            
+
         }
 
         enum class Needed {
