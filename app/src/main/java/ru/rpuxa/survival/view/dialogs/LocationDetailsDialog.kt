@@ -18,7 +18,7 @@ import javax.inject.Inject
 class LocationDetailsDialog : DialogFragment() {
 
     @Inject
-    lateinit var locations: MutableList<Location>
+    lateinit var locations: MutableSet<Location>
 
     private val args: LocationDetailsDialogArgs by navArgs()
     private val playerViewModel: PlayerViewModel by viewModels()

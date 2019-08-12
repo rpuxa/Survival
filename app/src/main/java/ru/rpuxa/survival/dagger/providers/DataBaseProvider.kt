@@ -1,20 +1,14 @@
-package ru.rpuxa.survival.dagger
+package ru.rpuxa.survival.dagger.providers
 
 import android.content.Context
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import ru.rpuxa.survival.model.database.DataBase
-import ru.rpuxa.survival.model.logic.Location
-import ru.rpuxa.survival.model.logic.locations.LakeLocation
-import ru.rpuxa.survival.view.App
 import javax.inject.Singleton
 
 @Module
-class Provider(private val app: App) {
-
-    @Provides
-    fun provideContext(): Context = app
+class DataBaseProvider {
 
     @Provides
     @Singleton
@@ -28,10 +22,4 @@ class Provider(private val app: App) {
 
     @Provides
     fun settingsDao(dataBase: DataBase) = dataBase.settingsDao
-
-    @Provides
-    @Singleton
-    fun allLocations(context: Context): MutableList<Location> = mutableListOf(
-        LakeLocation(context)
-    )
 }

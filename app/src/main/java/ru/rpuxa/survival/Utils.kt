@@ -4,21 +4,25 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import ru.rpuxa.survival.viewmodel.factories.ViewModelFactory
 import java.util.*
 
 val random = Random()
-
 
 
 fun <T> MutableLiveData(value: T) = MutableLiveData<T>().apply {
@@ -65,4 +69,7 @@ fun ViewGroup.inflate(@LayoutRes res: Int): View {
     val inflater = LayoutInflater.from(context)
     return inflater.inflate(res, this, false)
 }
+
+inline fun <reified VM : ViewModel> ComponentActivity.viewModel() = viewModels<VM>(::ViewModelFactory)
+inline fun <reified VM : ViewModel> Fragment.viewModel() = activityViewModels<VM>(::ViewModelFactory)
 

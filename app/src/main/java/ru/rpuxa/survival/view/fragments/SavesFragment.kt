@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,13 +15,14 @@ import org.jetbrains.anko.support.v4.toast
 import ru.rpuxa.survival.R
 import ru.rpuxa.survival.lazyNavController
 import ru.rpuxa.survival.observe
-import ru.rpuxa.survival.view.dialogs.PickNameDialog
 import ru.rpuxa.survival.view.adapters.SavesAdapter
+import ru.rpuxa.survival.view.dialogs.PickNameDialog
+import ru.rpuxa.survival.viewModel
 import ru.rpuxa.survival.viewmodel.MenuViewModel
 
 class SavesFragment : Fragment() {
 
-    private val viewModel: MenuViewModel by viewModels()
+    private val menuViewModel: MenuViewModel by viewModel()
     private val navController by lazyNavController
     private val args: SavesFragmentArgs by navArgs()
 
@@ -33,7 +33,7 @@ class SavesFragment : Fragment() {
         val slotsAmount = resources.getInteger(R.integer.save_slots_amount)
         val adapter = SavesAdapter(slotsAmount)
 
-        viewModel.players.observe(this) { players ->
+        menuViewModel.players.observe(this) { players ->
             adapter.update(
                 (0 until slotsAmount).map { slot -> players.find { it.slot == slot } }
             )
@@ -67,7 +67,7 @@ class SavesFragment : Fragment() {
             alert {
                 titleResource = R.string.are_you_sure_to_delete
                 positiveButton(R.string.dialog_yes) {
-                    viewModel.deleteSave(adapter.checked.value!!.id)
+                    menuViewModel.deleteSave(adapter.checked.value!!.id)
                     it.dismiss()
                     toast(R.string.save_removed)
                 }
@@ -92,19 +92,19 @@ class SavesFragment : Fragment() {
 
     private fun newGame(slot: Int) {
         PickNameDialog().show(childFragmentManager) { name ->
-            val id = viewModel.newPlayer(name, slot)
+            val id = menuViewModel.newPlayer(name, slot)
             startGame(id)
         }
     }
 
 
     private fun startGame(id: Long) {
-        viewModel.setLastSaveId(id)
+        menuViewModel.setLastSaveId(id)
         navController.navigate(SavesFragmentDirections.actionSavesFragmentToMainActivity(id))
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.onResume()
+        menuViewModel.onResume()
     }
 }

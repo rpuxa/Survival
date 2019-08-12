@@ -8,30 +8,17 @@ import kotlinx.android.synthetic.main.item_location.view.*
 import org.jetbrains.anko.toast
 import ru.rpuxa.survival.R
 import ru.rpuxa.survival.model.logic.Location
-import ru.rpuxa.survival.view.App
-import javax.inject.Inject
 
 class LocationsAdapter : BaseListAdapter<Location>() {
 
-    @Inject
-    lateinit var locations: MutableList<Location>
-
-    init {
-        App.component.inject(this)
-    }
-
-    private var states: Map<Location, States> = locations.associateWith { States.LOCKED }
-
-    init {
-        submitList(locations)
-    }
+    private var states: Map<Location, Boolean> = emptyMap()
 
     override val layout: Int get() = R.layout.item_location
 
     override fun getViewHolder(view: View) =
         object : BaseViewHolder(view) {
             val content: View = view.location_content
-            val lock: View = view.location_locked
+            val lock: View = view.location_lock
             val name: TextView = view.location_name
 
             override fun Context.bind(item: Location) {
@@ -60,11 +47,6 @@ class LocationsAdapter : BaseListAdapter<Location>() {
                 }
             }
         }
-
-    fun update(states: Map<Location, States>) {
-        this.states = states
-        notifyDataSetChanged()
-    }
 
     enum class States {
         UNLOCKED,

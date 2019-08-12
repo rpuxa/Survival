@@ -5,8 +5,9 @@ import ru.rpuxa.survival.R
 import ru.rpuxa.survival.model.logic.Location
 import ru.rpuxa.survival.model.logic.Player
 import ru.rpuxa.survival.model.logic.events.AmmoFound
+import javax.inject.Inject
 
-class LakeLocation(context: Context) : Location() {
+class LakeLocation @Inject constructor(context: Context) : Location() {
     override val id: Int get() = 0
     override val lockReason get() = throw UnsupportedOperationException()
     override val needed = Player.Resources.FREE

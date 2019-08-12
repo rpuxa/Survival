@@ -3,7 +3,8 @@ package ru.rpuxa.survival.view
 import android.app.Application
 import ru.rpuxa.survival.dagger.Component
 import ru.rpuxa.survival.dagger.DaggerComponent
-import ru.rpuxa.survival.dagger.Provider
+import ru.rpuxa.survival.dagger.providers.ContextProvider
+import ru.rpuxa.survival.dagger.providers.DataBaseProvider
 
 class App : Application() {
 
@@ -11,7 +12,8 @@ class App : Application() {
         super.onCreate()
 
         component = DaggerComponent.builder()
-            .provider(Provider(this))
+            .contextProvider(ContextProvider(this))
+            .dataBaseProvider(DataBaseProvider())
             .build()
     }
 
