@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import ru.rpuxa.survival.model.database.PlayerEntity
 import ru.rpuxa.survival.model.database.PlayersDao
 import ru.rpuxa.survival.model.database.SettingsDao
 import ru.rpuxa.survival.model.database.SettingsEntity
-import ru.rpuxa.survival.model.logic.Player
 import ru.rpuxa.survival.update
 import javax.inject.Inject
 
@@ -36,7 +36,7 @@ class MenuViewModel @Inject constructor(
     }
 
     fun newPlayer(name: String, slot: Int): Long {
-        val player = Player.create(name, slot)
+        val player = PlayerEntity.createNew(name, slot)
         viewModelScope.launch {
             playersDao.insert(player)
         }

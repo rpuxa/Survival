@@ -7,6 +7,7 @@ import ru.rpuxa.survival.dagger.providers.LocationProvider
 import ru.rpuxa.survival.dagger.providers.ViewModelProvider
 import ru.rpuxa.survival.view.adapters.LocationsAdapter
 import ru.rpuxa.survival.view.dialogs.LocationDetailsDialog
+import ru.rpuxa.survival.view.fragments.LocationsFragment
 import ru.rpuxa.survival.viewmodel.factories.ViewModelFactory
 import javax.inject.Singleton
 
@@ -21,4 +22,5 @@ interface Component {
     fun inject(model: ViewModelFactory)
     fun inject(locationsAdapter: LocationsAdapter)
     fun inject(locationDetailsDialog: LocationDetailsDialog)
+    fun inject(locationsFragment: LocationsFragment)
 }

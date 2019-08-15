@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import ru.rpuxa.survival.model.logic.Player
+import ru.rpuxa.survival.model.database.converters.toPlayerEntity
+import ru.rpuxa.survival.model.logic.player.Player
 
 @Dao
 abstract class PlayersDao {
@@ -23,8 +24,6 @@ abstract class PlayersDao {
 
     @Query("DELETE FROM players WHERE id = :id")
     abstract suspend fun delete(id: Long)
-
-
 
     suspend fun insert(player: Player) = insert(player.toPlayerEntity())
 }

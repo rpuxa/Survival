@@ -16,7 +16,7 @@ class ViewModelFactory : ViewModelProvider.NewInstanceFactory() {
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>) =
+    override fun <T : ViewModel> create(modelClass: Class<T>) =
         map[modelClass]?.get() as? T ?: error("ViewModel not found!")
 
 }

@@ -25,11 +25,23 @@ import java.util.*
 val random = Random()
 
 
+@Suppress("FunctionName")
 fun <T> MutableLiveData(value: T) = MutableLiveData<T>().apply {
     setValue(value)
 }
 
+@Suppress("UNCHECKED_CAST")
+fun <T> nullLiveData() = NullLiveData
+        as LiveData<T?>
+
+object NullLiveData : LiveData<Nothing?>() {
+    init {
+        postValue(null)
+    }
+}
+
 var <T> MutableLiveData<T>.nnValue: T
+    @Deprecated("Use value!!")
     inline get() = value!!
     set(value) {
         if (Looper.myLooper() == null) {
@@ -39,12 +51,14 @@ var <T> MutableLiveData<T>.nnValue: T
         }
     }
 
-fun <T> MutableLiveData<T>.update() {
-    value = value
+inline fun <T> MutableLiveData<T>.update(block: T.() -> Unit = {}) {
+    val v = value
+    v!!.block()
+    value = v
 }
 
-suspend fun <T> ui(
-    block: suspend CoroutineScope.() -> T
+suspend inline fun <T> ui(
+    noinline block: suspend CoroutineScope.() -> T
 ) = withContext(Dispatchers.Main, block)
 
 

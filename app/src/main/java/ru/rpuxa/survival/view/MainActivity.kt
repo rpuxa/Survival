@@ -7,11 +7,13 @@ import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.alert
 import ru.rpuxa.survival.R
+import ru.rpuxa.survival.viewModel
+import ru.rpuxa.survival.viewmodel.PlayerViewModel
 
 class MainActivity : AppCompatActivity() {
 
 //    private val args: MainActivityArgs by navArgs()
-//    private val playerViewModel: PlayerViewModel by viewModels()
+    private val playerViewModel: PlayerViewModel by viewModel()
     private val navController by lazy { findNavController(R.id.content) }
 
 
@@ -32,6 +34,11 @@ class MainActivity : AppCompatActivity() {
                 it.dismiss()
             }
         }.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        playerViewModel.onResume()
     }
 }
 

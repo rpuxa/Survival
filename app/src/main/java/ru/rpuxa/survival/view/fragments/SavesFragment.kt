@@ -102,9 +102,4 @@ class SavesFragment : Fragment() {
         menuViewModel.setLastSaveId(id)
         navController.navigate(SavesFragmentDirections.actionSavesFragmentToMainActivity(id))
     }
-
-    override fun onResume() {
-        super.onResume()
-        menuViewModel.onResume()
-    }
 }

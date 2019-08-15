@@ -8,12 +8,6 @@ abstract class SettingsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun update(settings: SettingsEntity)
 
-/*    @Query("SELECT * FROM settings")
-    protected abstract fun getListLiveData(): LiveData<List<SettingsEntity>>
-
-    @Query("SELECT * FROM settings")
-    protected abstract fun countCursor(): Cursor*/
-
     @Query("SELECT * FROM settings")
     protected abstract suspend fun get(): SettingsEntity?
 
@@ -26,8 +20,4 @@ abstract class SettingsDao {
         update(newSettings)
         return newSettings
     }
-
-    /*  fun isDefined() = countCursor().count != 0
-
-      fun getLiveData() = getListLiveData().map { it.first() }*/
 }

@@ -12,6 +12,7 @@ import ru.rpuxa.survival.R
 import ru.rpuxa.survival.lazyNavController
 import ru.rpuxa.survival.model.logic.Location
 import ru.rpuxa.survival.view.App
+import ru.rpuxa.survival.viewModel
 import ru.rpuxa.survival.viewmodel.PlayerViewModel
 import javax.inject.Inject
 
@@ -21,7 +22,7 @@ class LocationDetailsDialog : DialogFragment() {
     lateinit var locations: MutableSet<Location>
 
     private val args: LocationDetailsDialogArgs by navArgs()
-    private val playerViewModel: PlayerViewModel by viewModels()
+    private val playerViewModel: PlayerViewModel by viewModel()
     private val navController by lazyNavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,7 @@ class LocationDetailsDialog : DialogFragment() {
         location_dialog_name.text = location.name
         location_dialog_description.text = location.description
         location_dialog_explore.setOnClickListener {
-            playerViewModel.startToExplore(location)
+            playerViewModel.player.startToExplore(location)
             navController.navigate(R.id.explorationFragment)
         }
         location_dialog_back.setOnClickListener {
